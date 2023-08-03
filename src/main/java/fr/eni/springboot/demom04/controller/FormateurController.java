@@ -1,5 +1,7 @@
 package fr.eni.springboot.demom04.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,8 +28,10 @@ public class FormateurController {
 
 	// @RequestMapping(method = RequestMethod.GET, path = "/formateurs")
 	@GetMapping
-	public String afficherFormateurs() {
-		System.out.println("Nous chargerons la liste des formateurs dans une prochaine démonstration" + hashCode());
+	public String afficherFormateurs(Model model) {
+
+		List<Formateur> lstFormateurs = formateurService.getFormateurs();
+		model.addAttribute("formateurs", lstFormateurs);
 		return "view-formateurs";
 	}
 
