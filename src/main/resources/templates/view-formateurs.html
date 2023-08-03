@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Demo Spring Web</title>
+	<link rel="stylesheet" href="/css/demo-form.css" />
+</head>
+
+<body>
+	<h1>Les formateurs de l'ENI</h1>
+	<a href="/formateurs/detail?email=abaille@campus-eni.fr">Accéder au détail du formateur</a><br>
+	<a href="/formateurs/detail?email">Le paramètre n’a pas de valeur associée</a><br>
+	<a href="/formateurs/detail">Accéder à la vue sans le paramètre</a><br>
+	
+	<h2>Variables dans la l'URI</h2>
+	<a href="/formateurs/detail/variable/sgobin@eni.fr">Accéder au détail au formateur</a><br>
+	<a href="/formateurs/detail/variable/">Accéder à la vue sans la variable</a>
+</body>
+
+</html>
