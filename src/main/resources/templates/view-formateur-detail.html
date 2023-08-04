@@ -1,34 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<!-- Mise en place du layout -->
+<html xmlns:th="http://www.thymeleaf.org"
+		data-th-replace="~{layouts/layout :: layout-demo( 
+				titrePage=~{:: title},
+	contenuPage=~{fragments/fragment-formateur-detail :: frag-formateur-form},
+				ressourcesSupp=~{:: #ressources-css})}">
 <head>
-	<meta charset="UTF-8">
-	<title>Demo Spring Web</title>
-	<link rel="icon" data-th-href="@{/images/logoENI.png}" sizes="32x32" />
-	<link rel="stylesheet" data-th-href="@{/css/general.css}" />
+	<!-- Formateur comme titre de page -->
+	<title>Formateur</title>
+
+	<!-- Ajout de CSS demo-table.css -->
+	<th:block id="ressources-css"><link rel="stylesheet" data-th-href="@{/css/demo-form.css}" /></th:block>
 </head>
-
-<body>
-	<h1>Détail du formateur</h1>
-	<form action="/formateurs/detail" method="post">
-		<ul class="flex-outer">
-			<li>
-				<label for="inputPrenom">Prénom : </label>
-				<input type="text" name="prenom" id="inputPrenom" required data-th-value="${formateur.prenom}" />
-			</li>
-			<li>
-				<label for="inputNom">Nom : </label>
-				<input type="text" name="nom" id="inputNom" required data-th-value="${formateur.nom}"/>
-			</li>
-			<li>
-				<label for="inputEmail">Email : </label>
-				<input type="text" name="email" id="inputEmail" required data-th-value="${formateur.email}"/>
-			</li>
-			<li>
-				<button type="submit">Enregistrer</button>
-			</li>
-		</ul>
-	</form>
-</body>
-
+<body></body>
 </html>

@@ -1,24 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mise en place du layout -->
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-replace="~{layouts/layout :: layout-demo(titrePage=~{:: title},
+					contenuPage=~{:: .center-main},
+					ressourcesSupp=~{})}">
+
 
 <head>
-	<meta charset="UTF-8">
-	<title>Demo Spring Web</title>
-	<link rel="icon" data-th-href="@{/images/logoENI.png}" sizes="32x32" />
-	<link rel="stylesheet" data-th-href="@{/css/general.css}" />
-</head>
+<meta charset="UTF-8">
+<!-- Accueil comme titre de page -->
+	<title>Accueil</title>
 
+</head>
 <body>
-	<!-- Navbar -->
-	<header>
-		<h1 id="nav-title"><a href="/">Démonstrations Spring Web</a></h1>
-		<nav>
-			<ul>
-				<li><a href="/formateurs">Formateurs</a></li>
-				<li><a href="/formateurs/creer">Création</a></li>
-			</ul>
-		</nav>
-	</header>
 	<main class="center-main">
 		<section class="center-section">
 			<h1 style="text-align:center">Bienvenue à une formation ENI Ecole</h1>
@@ -26,5 +21,4 @@
 		</section>
 	</main>
 </body>
-
 </html>
