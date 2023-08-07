@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <!-- Mise en place du layout -->
-<html xmlns:th="http://www.thymeleaf.org"
-		data-th-replace="~{layouts/layout :: layout-demo( 
+<html xmlns:th="http://www.thymeleaf.org" data-th-replace="~{layouts/layout :: layout-demo( 
 				titrePage=~{:: title},
-	contenuPage=~{fragments/fragment-formateur-detail :: frag-formateur-form},
+				contenuPage=~{:: main},
 				ressourcesSupp=~{:: #ressources-css})}">
+
 <head>
 	<!-- Formateur comme titre de page -->
 	<title>Formateur</title>
 
 	<!-- Ajout de CSS demo-table.css -->
-	<th:block id="ressources-css"><link rel="stylesheet" data-th-href="@{/css/demo-form.css}" /></th:block>
+	<th:block id="ressources-css">
+		<link rel="stylesheet" data-th-href="@{/css/demo-form.css}" />
+	</th:block>
 </head>
-<body></body>
+
+<body>
+	<main>
+		<div data-th-replace="~{fragments/fragment-formateur-detail :: frag-formateur-form}"></div>
+		<div data-th-replace="~{fragments/fragment-cours-form :: frag-cours-form}"></div>
+	</main>
+</body>
+
 </html>

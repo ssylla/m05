@@ -1,6 +1,8 @@
 package fr.eni.springboot.demom04.bo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Formateur implements Serializable {
 
@@ -8,6 +10,12 @@ public class Formateur implements Serializable {
 	private String nom;
 	private String prenom;
 	private String email;
+	
+	private List<Cours> cours;
+	
+	{
+		cours = new ArrayList<>();
+	}
 	
 	public Formateur() {}
 	
@@ -39,6 +47,16 @@ public class Formateur implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	
+
+	public List<Cours> getCours() {
+		return cours;
+	}
+
+	public void setCours(List<Cours> cours) {
+		this.cours = cours;
 	}
 
 	@Override

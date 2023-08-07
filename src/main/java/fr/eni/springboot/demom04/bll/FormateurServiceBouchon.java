@@ -37,4 +37,16 @@ public class FormateurServiceBouchon implements FormateurService {
 	public Formateur findByEmail(String email) {
 		return lstFormateurs.stream().filter(item -> item.getEmail().equals(email)).findAny().orElse(null);
 	}
+
+	@Override
+	public void update(Formateur formateur) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateCoursFormateur(String emailFormateur, long idCours) {
+		// TODO Auto-generated method stub
+		
+	}	
 }
