@@ -1,11 +1,6 @@
-<header xmlns:th="http://www.thymeleaf.org" data-th-fragment="frag-entete">
+<header xmlns:th="http://www.thymeleaf.org" data-th-fragment="frag-entete(navigation)">
 	<h1 id="nav-title">
 		<a href="/">Démonstrations Spring Web</a>
 	</h1>
-	<nav>
-		<ul>
-			<li><a href="/formateurs">Formateurs</a></li>
-			<li><a href="/formateurs/creer">Création</a></li>
-		</ul>
-	</nav>
+	<nav data-th-replace="${navigation}"></nav>
 </header>

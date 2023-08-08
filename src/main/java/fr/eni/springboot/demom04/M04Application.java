@@ -8,5 +8,10 @@ public class M04Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(M04Application.class, args);
+		testMethod("toto");
+	}
+	
+	private static void testMethod (String navigation) {
+		System.out.println(navigation);
 	}
 }

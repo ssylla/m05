@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!-- Mise en place du layout -->
+<html xmlns:th="http://www.thymeleaf.org"
+	data-th-replace="~{layouts/layout-contexte :: layout-contexte(
+					titrePage=~{:: title},
+					contenuPage=~{:: .center-main}
+					)}">
+
+
+<head>
+<meta charset="UTF-8">
+<!-- Accueil comme titre de page -->
+	<title>Détail utilisateur</title>
+
+</head>
+<body>
+	<main class="center-main">
+		<section class="center-section">
+			<h1 style="text-align:center">Autre controlleur</h1><br/>
+			<h2 style="text-align:center" data-th-text="'Attribut en session '+${utilisateurSession}"></h2>
+		</section>
+	</main>
+</body>
+</html>

@@ -24,7 +24,7 @@
 <body>
 	<!-- Navbar -->
 	<!-- Intégration du fragment d'entête -->
-	<div data-th-replace="~{fragments/fragment-entete :: frag-entete}"></div>
+	<div data-th-replace="~{fragments/fragment-entete :: frag-entete(~{/fragments/fragment-navigation :: frag-nav})}"></div>
 
 	<!-- Rendre variable le contenu de la page -->
 	<main data-th-replace="${contenuPage} ?: ~{}">
