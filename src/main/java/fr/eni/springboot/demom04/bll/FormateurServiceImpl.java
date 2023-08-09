@@ -24,6 +24,18 @@ public class FormateurServiceImpl implements FormateurService {
 		Formateur formateur = new Formateur(nom, prenom, email);
 		formateurDAO.create(formateur);
 	}
+	
+	@Override
+	public void add(Formateur formateur) {
+		//Pour garantir l'unicité des formateurs dans notre tableau 
+		Formateur formateurExistant = formateurDAO.read(formateur.getEmail());
+		if (null == formateurExistant) {
+			formateurDAO.create(formateur);
+		} else {
+			formateurDAO.update(formateur);
+		}
+	}
+	
 
 	@Override
 	public List<Formateur> getFormateurs() {

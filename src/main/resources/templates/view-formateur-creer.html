@@ -7,7 +7,7 @@
 
 <head>
 	<!-- Formateur comme titre de page -->
-	<title>Formateur</title>
+	<title>Formateur - Création</title>
 
 	<!-- Ajout de CSS demo-form.css -->
 	<th:block id="ressources-css">
@@ -17,9 +17,9 @@
 
 <body>
 	<main>
-		<div data-th-replace="~{fragments/fragment-formateur-detail :: frag-formateur-form('/formateurs/detail', 'Détail du formateur',
-		~{fragments/fragment-liste-cours :: frag-liste-cours})}"></div>
-		<div data-th-replace="~{fragments/fragment-cours-form :: frag-cours-form}"></div>
+		<div data-th-replace="~{fragments/fragment-formateur-detail :: frag-formateur-form('/formateurs/creer', 'Création d\'un nouveau formateur',
+		~{fragments/fragment-liste-cours-form :: frag-liste-cours})}"></div>
+		
 	</main>
 </body>
 

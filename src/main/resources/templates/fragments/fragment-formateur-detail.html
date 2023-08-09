@@ -1,26 +1,23 @@
-<form xmlns:th="http://www.thymeleaf.org" data-th-fragment="frag-formateur-form" action="/formateurs/detail"
+<form xmlns:th="http://www.thymeleaf.org" data-th-fragment="frag-formateur-form(action, titreForm, listeDesCours)" 
+	data-th-action="@{${action}}"
+	data-th-object="${formateur}"
 	method="post">
-	<h1>Détail du formateur</h1>
+	<h1 data-th-text="${titreForm}"></h1>
 	<ul class="flex-outer">
 		<li>
 			<label for="inputPrenom">Prénom : </label>
-			<input type="text" name="prenom" id="inputPrenom" required data-th-value="${formateur.prenom}" />
+			<input type="text" id="inputPrenom" required data-th-field="*{prenom}" />
 		</li>
 		<li>
 			<label for="inputNom">Nom : </label>
-			<input type="text" name="nom" id="inputNom" required data-th-value="${formateur.nom}" />
+			<input type="text" id="inputNom" required data-th-field="*{nom}" />
 		</li>
 		<li>
 			<label for="inputEmail">Email : </label>
-			<input type="text" name="email" id="inputEmail" required data-th-value="${formateur.email}" readonly />
+			<input type="text" id="inputEmail" required data-th-field="*{email}" data-th-readonly="${#strings.contains(action, 'detail')}" />
 		</li>
 		<!-- Ajout de la liste des cours -->
-		<li>
-			<label>Cours : </label>
-			<ul>
-				<li data-th-each="item : ${formateur.cours}" data-th-text="${item.titre}"></li>
-			</ul>
-		</li>
+		<li data-th-replace="${listeDesCours}"></li>
 		<li>
 			<button type="submit">Enregistrer</button>
 		</li>

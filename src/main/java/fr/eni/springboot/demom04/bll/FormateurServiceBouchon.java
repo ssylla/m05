@@ -27,6 +27,12 @@ public class FormateurServiceBouchon implements FormateurService {
 		Formateur formateur = new Formateur(nom, prenom, email);
 		lstFormateurs.add(formateur);
 	}
+	
+	@Override
+	public void add(Formateur formateur) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public List<Formateur> getFormateurs() {
@@ -48,5 +54,6 @@ public class FormateurServiceBouchon implements FormateurService {
 	public void updateCoursFormateur(String emailFormateur, long idCours) {
 		// TODO Auto-generated method stub
 		
-	}	
+	}
+	
 }

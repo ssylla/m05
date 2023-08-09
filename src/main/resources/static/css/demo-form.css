@@ -26,7 +26,8 @@ form h1 {
 
 .flex-outer li button {
 	margin-left: auto;
-	margin-bottom: 5px; padding : 8px 16px;
+	margin-bottom: 5px;
+	padding: 8px 16px;
 	border: none;
 	background: #333;
 	color: #f2f2f2;
@@ -34,4 +35,8 @@ form h1 {
 	letter-spacing: .09em;
 	border-radius: 2px;
 	padding: 8px 16px
+}
+
+.flex-outer>li select {
+	flex: 1 0 220px;
 }

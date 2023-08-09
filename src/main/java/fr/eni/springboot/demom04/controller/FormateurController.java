@@ -56,6 +56,22 @@ public class FormateurController {
 		return "view-formateurs";
 	}
 
+	@GetMapping("/creer")
+	public String creerFormateur(Model model) {
+		
+		model.addAttribute("formateur", new Formateur());
+		return "view-formateur-creer";
+	}
+	
+
+	@PostMapping("/creer")
+	public String creerFormateur(@ModelAttribute("formateur") Formateur formateur) {
+
+		formateurService.add(formateur);
+		return "redirect:/formateurs";
+	}
+	
+	
 	@GetMapping("/detail")
 	public String detailFormateurParaParametre(
 			@RequestParam(name = "email", defaultValue = "coach@eni.fr", required = false) String emailFormateur, Model model) {
@@ -70,26 +86,25 @@ public class FormateurController {
 	}
 
 	@PostMapping("/detail")
-	public String mettreAJourFormateur(@RequestParam(required = true) String nom, @RequestParam(required = true) String prenom, @RequestParam(required = true) String email, Model model) {
+	public String mettreAJourFormateur(@ModelAttribute Formateur formateur) {
 
-		System.out.println("Les paramètres :");
-		System.out.println("Nom :" + nom);
-		System.out.println("Prenom :" + prenom);
-		System.out.println("Email : " + email);
+		System.out.println("Les données du formateur récupérées depuis le formulaire :");
+		System.out.println("Nom :" + formateur.getNom());
+		System.out.println("Prenom :" + formateur.getPrenom());
+		System.out.println("Email : " + formateur.getEmail());
 		
 		//Récupération de l'objet formateur depuis la base de données MAIS via le service formateur
-		Formateur formateur = formateurService.findByEmail(email);
+		//Formateur formateur = formateurService.findByEmail(email);
 		//On fait nos petites mises à jour côté code
-		formateur.setNom(nom);
-		formateur.setPrenom(prenom);
+		//formateur.setNom(nom);
+		//formateur.setPrenom(prenom);
 		//Pour finir, on met à jour la DB en passant TOUJOURS par le service
 		formateurService.update(formateur);
 		
-
 		//List<Formateur> lstFormateurs = formateurService.getFormateurs();
 		//model.addAttribute("formateurs", lstFormateurs);
 		
-		return "view-formateurs";
+		return "redirect:/formateurs";
 	}
 	
 
@@ -100,7 +115,6 @@ public class FormateurController {
 		formateurService.updateCoursFormateur(email, id);
 		return "redirect:/formateurs/detail?email="+email;
 	}
-	
 	
 	@GetMapping({"/detail/variable/", "/detail/variable/{email}"})
 	public String detailFormateurParVariable(
@@ -115,7 +129,5 @@ public class FormateurController {
 		 */
 		
 		return "redirect:/formateurs";
-	}
-	
-	
+	}	
 }
