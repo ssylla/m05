@@ -10,14 +10,14 @@
 <head>
 <meta charset="UTF-8">
 <!-- Accueil comme titre de page -->
-	<title>Accueil</title>
+	<title data-th-text="#{index.title}"></title>
 
 </head>
 <body>
 	<main class="center-main">
 		<section class="center-section">
-			<h1 style="text-align:center">Bienvenue à une formation ENI Ecole</h1>
-			<h2 style="text-align:center">Vous utilisez l'application de démonstration sur Spring Web</h2>
+			<h1 style="text-align:center" data-th-text="#{index.h1}"></h1>
+			<h2 style="text-align:center" data-th-text="#{index.h2}"></h2>
 		</section>
 	</main>
 </body>
