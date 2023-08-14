@@ -4,4 +4,5 @@
 		<option data-th-each="item : ${coursSession}" data-th-value="${item.id}"
 			data-th-text="${item.id+ ' '+ item.titre}"></option>
 	</select>
+	<div data-th-replace="~{fragments/errors/fragment-error :: frag-error-item('cours')}"></div>
 </li>

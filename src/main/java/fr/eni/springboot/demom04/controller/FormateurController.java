@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import fr.eni.springboot.demom04.bll.CoursService;
 import fr.eni.springboot.demom04.bll.FormateurService;
 import fr.eni.springboot.demom04.bo.Cours;
 import fr.eni.springboot.demom04.bo.Formateur;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/formateurs")
@@ -65,10 +67,14 @@ public class FormateurController {
 	
 
 	@PostMapping("/creer")
-	public String creerFormateur(@ModelAttribute("formateur") Formateur formateur) {
+	public String creerFormateur(@Valid @ModelAttribute("formateur") Formateur formateur, BindingResult bindingResult) {
 
-		formateurService.add(formateur);
-		return "redirect:/formateurs";
+		if (bindingResult.hasErrors()) {
+			return "view-formateur-creer";
+		} else {
+			formateurService.add(formateur);
+			return "redirect:/formateurs";
+		}
 	}
 	
 	
@@ -86,25 +92,30 @@ public class FormateurController {
 	}
 
 	@PostMapping("/detail")
-	public String mettreAJourFormateur(@ModelAttribute Formateur formateur) {
+	public String mettreAJourFormateur(@Valid @ModelAttribute Formateur formateur, BindingResult bindingResult) {
 
 		System.out.println("Les données du formateur récupérées depuis le formulaire :");
 		System.out.println("Nom :" + formateur.getNom());
 		System.out.println("Prenom :" + formateur.getPrenom());
 		System.out.println("Email : " + formateur.getEmail());
 		
-		//Récupération de l'objet formateur depuis la base de données MAIS via le service formateur
-		//Formateur formateur = formateurService.findByEmail(email);
-		//On fait nos petites mises à jour côté code
-		//formateur.setNom(nom);
-		//formateur.setPrenom(prenom);
-		//Pour finir, on met à jour la DB en passant TOUJOURS par le service
-		formateurService.update(formateur);
+		if (bindingResult.hasErrors()) {
+			return "view-formateur-detail";
+		} else {
+			//Récupération de l'objet formateur depuis la base de données MAIS via le service formateur
+			//Formateur formateur = formateurService.findByEmail(email);
+			//On fait nos petites mises à jour côté code
+			//formateur.setNom(nom);
+			//formateur.setPrenom(prenom);
+			//Pour finir, on met à jour la DB en passant TOUJOURS par le service
+			formateurService.update(formateur);
+			
+			//List<Formateur> lstFormateurs = formateurService.getFormateurs();
+			//model.addAttribute("formateurs", lstFormateurs);
+			
+			return "redirect:/formateurs";	
+		}
 		
-		//List<Formateur> lstFormateurs = formateurService.getFormateurs();
-		//model.addAttribute("formateurs", lstFormateurs);
-		
-		return "redirect:/formateurs";
 	}
 	
 

@@ -4,21 +4,34 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;//JSR 303
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 public class Formateur implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	@NotBlank
+	@Size( max = 250, message = "Le nom doit avoir au moins 4 caractères", min = 2)
 	private String nom;
+	@NotBlank
+	@Size(min = 2, max = 250)
 	private String prenom;
+	@NotBlank
+	@Email
+	@Pattern(regexp = "^[\\w-\\.]+@campus-eni.fr$")
 	private String email;
-	
+
 	private List<Cours> cours;
-	
+
 	{
 		cours = new ArrayList<>();
 	}
-	
-	public Formateur() {}
-	
+
+	public Formateur() {
+	}
+
 	public Formateur(String nom, String prenom, String email) {
 		this.nom = nom;
 		this.prenom = prenom;
@@ -48,8 +61,6 @@ public class Formateur implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
 	public List<Cours> getCours() {
 		return cours;

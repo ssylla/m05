@@ -1,0 +1,5 @@
+<ul  xmlns:th="http://www.thymeleaf.org" data-th-fragment="frag-error-item(fieldName)"
+	data-th-if="${#fields.hasErrors(fieldName)}"
+	class="cards">
+	<li data-th-each="errItem : ${#fields.errors(fieldName)}" data-th-text="${errItem}"></li>		
+</ul> 

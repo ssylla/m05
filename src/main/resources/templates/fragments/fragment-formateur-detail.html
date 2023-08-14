@@ -3,18 +3,23 @@
 	data-th-object="${formateur}"
 	method="post">
 	<h1 data-th-text="${titreForm}"></h1>
+	<!-- Intégration du fragment principal -->
+	<div data-th-replace="~{fragments/errors/fragment-errors :: frag-errors}"></div>
 	<ul class="flex-outer">
 		<li>
 			<label for="inputPrenom">Prénom : </label>
 			<input type="text" id="inputPrenom" required data-th-field="*{prenom}" />
+			<div data-th-replace="~{fragments/errors/fragment-error :: frag-error-item('prenom')}"></div>
 		</li>
 		<li>
 			<label for="inputNom">Nom : </label>
 			<input type="text" id="inputNom" required data-th-field="*{nom}" />
+			<div data-th-replace="~{fragments/errors/fragment-error :: frag-error-item('nom')}"></div>
 		</li>
 		<li>
 			<label for="inputEmail">Email : </label>
 			<input type="text" id="inputEmail" required data-th-field="*{email}" data-th-readonly="${#strings.contains(action, 'detail')}" />
+			<div data-th-replace="~{fragments/errors/fragment-error :: frag-error-item('email')}"></div>
 		</li>
 		<!-- Ajout de la liste des cours -->
 		<li data-th-replace="${listeDesCours}"></li>
