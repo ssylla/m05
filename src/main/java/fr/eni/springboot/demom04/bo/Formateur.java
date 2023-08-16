@@ -23,6 +23,8 @@ public class Formateur implements Serializable {
 	@Pattern(regexp = "^[\\w-\\.]+@campus-eni.fr$")
 	private String email;
 
+	private Cours coursPrincipal;
+	
 	private List<Cours> cours;
 
 	{
@@ -62,6 +64,15 @@ public class Formateur implements Serializable {
 		this.email = email;
 	}
 
+	
+	public Cours getCoursPrincipal() {
+		return coursPrincipal;
+	}
+
+	public void setCoursPrincipal(Cours coursPrincipal) {
+		this.coursPrincipal = coursPrincipal;
+	}
+
 	public List<Cours> getCours() {
 		return cours;
 	}
@@ -72,6 +83,9 @@ public class Formateur implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Formateur [nom=" + nom + ", prenom=" + prenom + ", email=" + email + "]";
+		return "Formateur [lastName=" + nom + ", firstName=" + prenom + ", email=" + email + ", coursPrincipal="
+				+ coursPrincipal + "]";
 	}
+
+	
 }
