@@ -46,8 +46,8 @@ public class FormateurDAOBouchon implements FormateurDAO {
 		Formateur item = read(formateur.getEmail());
 		if (item != null) {
 			item.setEmail(formateur.getEmail());
-			item.setNom(formateur.getNom());
-			item.setPrenom(formateur.getPrenom());
+			item.setLastName(formateur.getLastName());
+			item.setFirstName(formateur.getFirstName());
 		}		
 	}
 

@@ -95,8 +95,8 @@ public class FormateurController {
 	public String mettreAJourFormateur(@Valid @ModelAttribute Formateur formateur, BindingResult bindingResult) {
 
 		System.out.println("Les données du formateur récupérées depuis le formulaire :");
-		System.out.println("Nom :" + formateur.getNom());
-		System.out.println("Prenom :" + formateur.getPrenom());
+		System.out.println("Nom :" + formateur.getLastName());
+		System.out.println("Prenom :" + formateur.getFirstName());
 		System.out.println("Email : " + formateur.getEmail());
 		
 		if (bindingResult.hasErrors()) {

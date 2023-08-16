@@ -14,15 +14,17 @@ public class Formateur implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@NotBlank
 	@Size( max = 250, message = "Le nom doit avoir au moins 4 caractères", min = 2)
-	private String nom;
+	private String lastName;
 	@NotBlank
 	@Size(min = 2, max = 250)
-	private String prenom;
+	private String firstName;
 	@NotBlank
 	@Email
 	@Pattern(regexp = "^[\\w-\\.]+@campus-eni.fr$")
 	private String email;
 
+	private Cours coursPrincipal;
+	
 	private List<Cours> cours;
 
 	{
@@ -33,25 +35,25 @@ public class Formateur implements Serializable {
 	}
 
 	public Formateur(String nom, String prenom, String email) {
-		this.nom = nom;
-		this.prenom = prenom;
+		this.lastName = nom;
+		this.firstName = prenom;
 		this.email = email;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setLastName(String nom) {
+		this.lastName = nom;
 	}
 
-	public String getPrenom() {
-		return prenom;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setFirstName(String prenom) {
+		this.firstName = prenom;
 	}
 
 	public String getEmail() {
@@ -60,6 +62,15 @@ public class Formateur implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	
+	public Cours getCoursPrincipal() {
+		return coursPrincipal;
+	}
+
+	public void setCoursPrincipal(Cours coursPrincipal) {
+		this.coursPrincipal = coursPrincipal;
 	}
 
 	public List<Cours> getCours() {
@@ -72,6 +83,9 @@ public class Formateur implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Formateur [nom=" + nom + ", prenom=" + prenom + ", email=" + email + "]";
+		return "Formateur [lastName=" + lastName + ", firstName=" + firstName + ", email=" + email + ", coursPrincipal="
+				+ coursPrincipal + "]";
 	}
+
+	
 }

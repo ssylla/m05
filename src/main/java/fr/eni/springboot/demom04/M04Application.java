@@ -7,7 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import fr.eni.springboot.demom04.bo.Formateur;
+import fr.eni.springboot.demom04.dal.FormateurRowMapper;
 
 @SpringBootApplication
 public class M04Application implements CommandLineRunner {
@@ -23,11 +27,11 @@ public class M04Application implements CommandLineRunner {
 			+ "	PRIMARY KEY (`email`)\r\n"
 			+ ")";
 	
-	private static final String INSERT_FORMATEUR_QUERY = "INSERT INTO FORMATEUR (email, nom, prenom) VALUES ('abaille@campus-eni.fr','BAILLE','Anne-Lise')";
-	private static final String COUNT_FORMATEUR_QUERY = "SELECT count(*) FROM FORMATEUR";
-	private static final String FIND_EMAILS_FORMATEURS = "SELECT email FROM FORMATEUR";
-	
-	
+	private static final String INSERT_FORMATEUR_QUERY = "INSERT INTO `formateur` (email, nom, prenom) VALUES ('abaille@campus-eni.fr','BAILLE','Anne-Lise')";
+	private static final String COUNT_FORMATEUR_QUERY = "SELECT count(*) FROM `formateur`";
+	private static final String FIND_EMAILS_FORMATEURS = "SELECT email FROM `formateur`";
+	private static final String FIND_ALL_FORMATEURS_QUERY = "SELECT email AS email, nom AS lastName, prenom AS firstName FROM `formateur`";
+	private static final String FIND_ALL_FORMATEURS_COURS_QUERY = "SELECT * FROM `formateur` f INNER JOIN `cours_eni` c ON f.id_cours_principal = c.id";
 	
 	
 	public static void main(String[] args) {
@@ -41,10 +45,10 @@ public class M04Application implements CommandLineRunner {
 		System.out.println("**************Welcome***************");
 		System.out.println("************************************");
 		//Création de la table formateur
-		creerTableFormateur();
+		//creerTableFormateur();
 		
 		//Insertion de Anne-Lise
-		System.out.println("Le nombre de formateurs ajoutés : "+ ajoutFormateurs());
+		//System.out.println("Le nombre de formateurs ajoutés : "+ ajoutFormateurs());
 		
 		//Récupération du nombre de formateurs
 		System.out.println("Le nombre total de formateurs dans ma base est : "+ getNbFormateurs());
@@ -52,7 +56,12 @@ public class M04Application implements CommandLineRunner {
 		//Récupération des emails de l'ensemble des formateurs
 		System.out.println("Liste des emails" + getFormateursEmails());
 		
-		//Récupération d'une liste de formateurs correctement initialisée par Spring      	
+		//Récupération d'une liste de formateurs correctement initialisée par Spring 
+		System.out.println("Liste des formateurs : " + getFormateurs()); 
+		
+
+		//Récupération d'une liste de formateurs correctement initialisée par Spring 
+		System.out.println("Liste des formateurs en utlisant un rowMapper : " + getFormateursAvecRowMapper()); 
 	}
 	
 	private void creerTableFormateur() {
@@ -72,5 +81,15 @@ public class M04Application implements CommandLineRunner {
 
 	private List<String> getFormateursEmails() {
 		return jt.queryForList(FIND_EMAILS_FORMATEURS, String.class);
+	}
+	
+	private List<Formateur> getFormateurs() {
+		
+		return jt.query(FIND_ALL_FORMATEURS_QUERY, new BeanPropertyRowMapper<>(Formateur.class));
+	}
+	
+	private List<Formateur> getFormateursAvecRowMapper() {
+		
+		return jt.query(FIND_ALL_FORMATEURS_COURS_QUERY, new FormateurRowMapper());
 	}
 }
