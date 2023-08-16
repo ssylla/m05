@@ -33,7 +33,6 @@ public class M04Application implements CommandLineRunner {
 	private static final String FIND_ALL_FORMATEURS_QUERY = "SELECT email, nom, prenom FROM `formateur`";
 	private static final String FIND_ALL_FORMATEURS_COURS_QUERY = "SELECT f.email AS email, f.nom AS lastName, f.prenom AS firstName, c.* FROM `formateur` f INNER JOIN `cours_eni` c ON f.id_cours_principal = c.id";
 	
-	
 	public static void main(String[] args) {
 		SpringApplication.run(M04Application.class, args);
 	}
