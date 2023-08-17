@@ -2,6 +2,7 @@ package fr.eni.springboot.demom04;
 
 
 import java.util.List;
+import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -9,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import fr.eni.springboot.demom04.bo.Formateur;
 import fr.eni.springboot.demom04.dal.FormateurRowMapper;
@@ -18,6 +21,9 @@ public class M04Application implements CommandLineRunner {
 
 	@Autowired
 	private JdbcTemplate jt;
+	
+	@Autowired
+	private NamedParameterJdbcTemplate njt;
 	
 	private static final String DROP_FORMATEUR_TABLE_QUERY = "DROP TABLE IF EXISTS `formateur`";
 	private static final String CREATE_FORMATEUR_TABLE_QUERY = "CREATE TABLE `formateur` (\r\n"
@@ -32,6 +38,14 @@ public class M04Application implements CommandLineRunner {
 	private static final String FIND_EMAILS_FORMATEURS = "SELECT email FROM `formateur`";
 	private static final String FIND_ALL_FORMATEURS_QUERY = "SELECT email, nom, prenom FROM `formateur`";
 	private static final String FIND_ALL_FORMATEURS_COURS_QUERY = "SELECT f.email AS email, f.nom AS lastName, f.prenom AS firstName, c.* FROM `formateur` f INNER JOIN `cours_eni` c ON f.id_cours_principal = c.id";
+	//Requête de création de formateur avec des paramètres
+	private static final String INSERT_FORMATEUR_AVEC_PARAMS = "INSERT INTO `formateur` (email, nom, prenom) VALUES ('%s','%s','%s')";
+	
+
+	//Requête d'authentifications 
+	private static final String LOGIN_NON_SECURE = "SELECT login FROM `utilisateur` WHERE login = '%s' AND mdp = '%s'";
+	private static final String LOGIN_SECURE = "SELECT login FROM `utilisateur` WHERE login = ? AND mdp = ?";
+	private static final String LOGIN_SECURE_NOMME = "SELECT login FROM `utilisateur` WHERE login = :identifiant AND mdp = :pwd";
 	
 	public static void main(String[] args) {
 		SpringApplication.run(M04Application.class, args);
@@ -61,6 +75,34 @@ public class M04Application implements CommandLineRunner {
 
 		//Récupération d'une liste de formateurs correctement initialisée par Spring 
 		System.out.println("Liste des formateurs en utlisant un rowMapper : " + getFormateursAvecRowMapper()); 
+		
+		
+		//Ajout d'un nouveau formateur variable
+		//System.out.println("On ajoute Manu : "+ creerFormateur("manu4@campus-eni.fr", "Malabry", "Manu"));
+		
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Bienvenue dans mon outils");
+		System.out.println("Merci de vous identifier...");
+
+		System.out.print("Login : ");
+		String login = sc.nextLine();
+		System.out.print("Mot de passe : ");
+		String mdp = sc.nextLine();
+		
+		String userLogin = login(login, mdp);
+		if (null != userLogin) {
+			System.out.printf("Bienvenue à toi (non securisé) %s%n", userLogin);
+		} else {
+			System.out.println("Erreur d'identification (non securisé)");
+		}
+		
+		String userLoginSecurise = loginSecurise(login, mdp);
+		if (null != userLoginSecurise) {
+			System.out.printf("Bienvenue à toi (securisé) %s%n", userLogin);
+		} else {
+			System.out.println("Erreur d'identification (securisé)");
+		}
 	}
 	
 	private void creerTableFormateur() {
@@ -90,5 +132,27 @@ public class M04Application implements CommandLineRunner {
 	private List<Formateur> getFormateursAvecRowMapper() {
 		
 		return jt.query(FIND_ALL_FORMATEURS_COURS_QUERY, new FormateurRowMapper());
+	}
+	
+	private int creerFormateur(String email, String nom, String prenom) {
+		
+		return jt.update(String.format(INSERT_FORMATEUR_AVEC_PARAMS, email, nom, prenom));
+	}
+
+	private String login(String login, String motDePasse) {
+		
+		return jt.queryForObject(String.format(LOGIN_NON_SECURE, login, motDePasse), String.class);
+	}
+	private String loginSecurise(String login, String motDePasse) {
+		
+		return jt.queryForObject(LOGIN_SECURE, String.class, login, motDePasse);
+	}
+	private String loginSecuriseNomme(String login, String motDePasse) {
+		
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("identifiant", login);
+		namedParameters.addValue("pwd", motDePasse);
+		
+		return njt.queryForObject(LOGIN_SECURE, namedParameters, String.class);
 	}
 }
