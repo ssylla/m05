@@ -3,12 +3,14 @@ package fr.eni.springboot.demom04.dal.mock;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import fr.eni.springboot.demom04.bo.Cours;
 import fr.eni.springboot.demom04.dal.CoursDAO;
 
 @Repository
+@Profile("dev")
 public class CoursDAOBouchon implements CoursDAO {
 	// Solution temporaire - gestion d'une liste de formateur locale
 	private static List<Cours> lstCours;
@@ -41,4 +43,12 @@ public class CoursDAOBouchon implements CoursDAO {
 	public void insertCoursFormateur(long idCours, String emailFormateur) {
 		System.out.println("Formateur - " + emailFormateur + " dispense " + idCours);
 	}
+
+	@Override
+	public List<Cours> findByFormateur(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }

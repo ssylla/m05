@@ -9,5 +9,7 @@ public interface CoursDAO {
 
 	List<Cours> findAll();
 	
+	List<Cours> findByFormateur(String email);
+	
 	void insertCoursFormateur(long idCours, String emailFormateur);
 }

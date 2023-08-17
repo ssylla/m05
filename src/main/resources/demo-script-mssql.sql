@@ -1,26 +1,50 @@
+--DROP DATABASE [Demo_ENI];--Supprime la base si elle existe
+
+--CREATE DATABASE [Demo_ENI];--Crée la base si elle existe
+
 --Supprime les tables si elles existent
+DROP TABLE [COURS_FORMATEUR];
 DROP TABLE [FORMATEURS];
 DROP TABLE [COURS_ENI];
-
---Crée la table COURS_ENI
-CREATE TABLE [COURS_ENI](
-	[id] int NOT NULL PRIMARY KEY ,
-	[titre] [NVARCHAR](250) NOT NULL,
-	[duree] int NOT NULL) ;
 
 --Crée la table FORMATEURS
 CREATE TABLE [FORMATEURS](
 	[email] [NVARCHAR](200) PRIMARY KEY,
 	[nom] [NVARCHAR](250) NOT NULL,
 	[prenom] [NVARCHAR](250) NOT NULL,
-	[id_cours_principal] int ) ;
+	[nbCoursDispenses] int DEFAULT 0) ;
+	
+--Crée la table COURS_ENI
+CREATE TABLE [COURS_ENI](
+	[id] int NOT NULL PRIMARY KEY ,
+	[titre] [NVARCHAR](250) NOT NULL,
+	[duree] int NOT NULL) ;
+	
 
-ALTER TABLE FORMATEURS add
-constraint fk_FORMATEURS_COURS_ENI foreign key (id_cours_principal)
+--Crée la table COURS_FORMATEUR
+CREATE TABLE [](
+	[email_formateur] [NVARCHAR](200) NOT NULL,
+	[id_cours] int NOT NULL,
+	PRIMARY KEY ([email_formateur],[id_cours])) ;
+	
+ALTER TABLE COURS_FORMATEUR add
+constraint fk_FORMATEURS_COURS_FORMATEUR foreign key (email_formateur)
+references FORMATEURS(email),
+constraint fk_COURS_ENI_COURS_FORMATEUR foreign key (id_cours)
 references COURS_ENI(id);
 
 -- ENREGISTREMENTS :
+	
+--Insère des enregistrements dans la table FORMATEURS
+INSERT INTO [FORMATEURS] ([email],[nom],[prenom]) VALUES ('abaille@campus-eni.fr','BAILLE','Anne-Lise');
+INSERT INTO [FORMATEURS] ([email],[nom],[prenom]) VALUES ('jtrillard@campus-eni.fr','TRILLARD','Julien');
+INSERT INTO [FORMATEURS] ([email],[nom],[prenom]) VALUES ('fdelaschesnais@campus-eni.fr','DELACHESNAIS','Frédéric');
+INSERT INTO [FORMATEURS] ([email],[nom],[prenom]) VALUES ('pmontembault@campus-eni.fr','MONTEMBAULT','Philippe');
+INSERT INTO [FORMATEURS] ([email],[nom],[prenom]) VALUES ('hbernard@campus-eni.fr','BERNARD','Hervé');
+INSERT INTO [FORMATEURS] ([email],[nom],[prenom]) VALUES ('tgroussard@campus-eni.fr','GROUSSARD','Thierry');
+INSERT INTO [FORMATEURS] ([email],[nom],[prenom]) VALUES ('sgobin@campus-eni.fr','GOBIN','Stéphane');
                           
+	
 --Insère des enregistrements dans la table COURS_ENI
 INSERT INTO [COURS_ENI] ([id],[titre],[duree]) VALUES (10,'Algorithmique',5);
 INSERT INTO [COURS_ENI] ([id],[titre],[duree]) VALUES (20,'Initiation Programmation avec Java',5);
@@ -47,10 +71,79 @@ INSERT INTO [COURS_ENI] ([id],[titre],[duree]) VALUES (330,'Sécurité sur proje
 
 	
 --Insère des enregistrements dans la table FORMATEURS
-INSERT INTO [FORMATEURS] ([email],[nom],[prenom],[id_cours_principal]) VALUES ('abaille@campus-eni.fr','BAILLE','Anne-Lise',160);
-INSERT INTO [FORMATEURS] ([email],[nom],[prenom],[id_cours_principal]) VALUES ('jtrillard@campus-eni.fr','TRILLARD','Julien',321);
-INSERT INTO [FORMATEURS] ([email],[nom],[prenom],[id_cours_principal]) VALUES ('fdelaschesnais@campus-eni.fr','DELACHESNAIS','Frédéric',50);
-INSERT INTO [FORMATEURS] ([email],[nom],[prenom],[id_cours_principal]) VALUES ('pmontembault@campus-eni.fr','MONTEMBAULT','Philippe',141);
-INSERT INTO [FORMATEURS] ([email],[nom],[prenom],[id_cours_principal]) VALUES ('hbernard@campus-eni.fr','BERNARD','Hervé',145);
-INSERT INTO [FORMATEURS] ([email],[nom],[prenom],[id_cours_principal]) VALUES ('tgroussard@campus-eni.fr','GROUSSARD','Thierry',30);
-INSERT INTO [FORMATEURS] ([email],[nom],[prenom],[id_cours_principal]) VALUES ('sgobin@campus-eni.fr','GOBIN','Stéphane',110);
+INSERT INTO [ ([email_format]eur],[id_cours]) VALUES ('abaille@campus-eni.fr',10);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',20);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',30);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',50);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',100);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',105);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',110);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',130);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',150);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',160);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',280);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',302);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',321);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('abaille@campus-eni.fr',322);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',10);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',20);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',30);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',100);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',105);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',110);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',130);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',190);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',231);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',302);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',321);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',322);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('jtrillard@campus-eni.fr',330);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('fdelaschesnais@campus-eni.fr',10);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('fdelaschesnais@campus-eni.fr',20);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('fdelaschesnais@campus-eni.fr',30);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('fdelaschesnais@campus-eni.fr',50);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('fdelaschesnais@campus-eni.fr',100);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('fdelaschesnais@campus-eni.fr',105);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('fdelaschesnais@campus-eni.fr',110);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('fdelaschesnais@campus-eni.fr',130);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('fdelaschesnais@campus-eni.fr',150);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('fdelaschesnais@campus-eni.fr',160);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('fdelaschesnais@campus-eni.fr',280);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('pmontembault@campus-eni.fr',10);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('pmontembault@campus-eni.fr',20);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('pmontembault@campus-eni.fr',30);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('pmontembault@campus-eni.fr',100);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('pmontembault@campus-eni.fr',106);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('pmontembault@campus-eni.fr',130);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('pmontembault@campus-eni.fr',140);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('pmontembault@campus-eni.fr',141);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('pmontembault@campus-eni.fr',321);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('hbernard@campus-eni.fr',10);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('hbernard@campus-eni.fr',20);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('hbernard@campus-eni.fr',50);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('hbernard@campus-eni.fr',100);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('hbernard@campus-eni.fr',106);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('hbernard@campus-eni.fr',130);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('hbernard@campus-eni.fr',140);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('hbernard@campus-eni.fr',141);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('hbernard@campus-eni.fr',145);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('hbernard@campus-eni.fr',146);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('tgroussard@campus-eni.fr',20);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('tgroussard@campus-eni.fr',30);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('tgroussard@campus-eni.fr',105);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('tgroussard@campus-eni.fr',150);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('tgroussard@campus-eni.fr',160);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('tgroussard@campus-eni.fr',280);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',10);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',20);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',30);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',50);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',100);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',105);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',110);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',130);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',150);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',160);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',190);
+INSERT INTO [COURS_FORMATEUR] ([email_formateur],[id_cours]) VALUES ('sgobin@campus-eni.fr',321);
+                    
