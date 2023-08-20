@@ -12,4 +12,6 @@ public interface CoursDAO {
 	List<Cours> findByFormateur(String email);
 	
 	void insertCoursFormateur(long idCours, String emailFormateur);
+	
+	boolean validateListOfCourseIds(List<Cours> lstCours);
 }

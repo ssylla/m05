@@ -21,12 +21,6 @@ public class FormateurServiceBouchon implements FormateurService {
 	{
 		System.out.println("Un ouvel objet est créé");
 	}
-
-	@Override
-	public void add(String nom, String prenom, String email) {
-		Formateur formateur = new Formateur(nom, prenom, email);
-		lstFormateurs.add(formateur);
-	}
 	
 	@Override
 	public void add(Formateur formateur) {

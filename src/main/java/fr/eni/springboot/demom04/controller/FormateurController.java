@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fr.eni.springboot.demom04.bll.CoursService;
 import fr.eni.springboot.demom04.bll.FormateurService;
+import fr.eni.springboot.demom04.bll.error.BusinessException;
 import fr.eni.springboot.demom04.bo.Cours;
 import fr.eni.springboot.demom04.bo.Formateur;
 import jakarta.validation.Valid;
@@ -67,19 +69,27 @@ public class FormateurController {
 	
 
 	@PostMapping("/creer")
-	public String creerFormateur(@Valid @ModelAttribute("formateur") Formateur formateur, BindingResult bindingResult) {
+	public String creerFormateur(@Valid @ModelAttribute("formateur") Formateur formateur, BindingResult bindingResult)  {
 
 		if (bindingResult.hasErrors()) {
 			return "view-formateur-creer";
 		} else {
-			formateurService.add(formateur);
-			return "redirect:/formateurs";
+			try {
+				formateurService.add(formateur);
+				return "redirect:/formateurs";
+			} catch (BusinessException be) {
+				be.getErrors().forEach(errorItem -> {
+					ObjectError error = new ObjectError("globalErrors", errorItem.getMessageKey());
+					bindingResult.addError(error);
+				});				
+				return "view-formateur-creer";
+			}			
 		}
 	}
 	
 	
 	@GetMapping("/detail")
-	public String detailFormateurParaParametre(
+	public String detailFormateurParParametre(
 			@RequestParam(name = "email", defaultValue = "coach@eni.fr", required = false) String emailFormateur, Model model) {
 
 		System.out.println("Le paramètre reçu = " + emailFormateur);

@@ -19,6 +19,7 @@ public class FormateurDAOImpl implements FormateurDAO {
 	private static final String FIND_BY_EMAIL_QUERY = "SELECT email, nom, prenom FROM `formateur` WHERE email = :email";
 	private static final String FIND_ALL_QUERY = "SELECT email, nom, prenom FROM `formateur`";
 	private static final String UPDATE_QUERY = "UPDATE `formateur` SET nom = :nom, prenom = :prenom WHERE email = :email";
+	private final String COUNT_EMAIL_QUERY = "SELECT count(email) FROM `formateur` WHERE email = :email";
 
 	@Autowired
 	private NamedParameterJdbcTemplate njt;
@@ -53,4 +54,12 @@ public class FormateurDAOImpl implements FormateurDAO {
 	public List<Formateur> findAll() {
 		return njt.query(FIND_ALL_QUERY, new BeanPropertyRowMapper<>(Formateur.class));
 	}
+
+	@Override
+	public int uniqueEmail(String email) {
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+		namedParameters.addValue("email", email);
+		return njt.queryForObject(COUNT_EMAIL_QUERY, namedParameters, Integer.class);
+	}
+
 }

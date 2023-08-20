@@ -53,4 +53,9 @@ public class FormateurDAOBouchon implements FormateurDAO {
 		}		
 	}
 
+	@Override
+	public int uniqueEmail(String email) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

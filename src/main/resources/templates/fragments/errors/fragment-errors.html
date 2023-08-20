@@ -1,5 +1,8 @@
 <div xmlns:th="http://www.thymeleaf.org" data-th-fragment="frag-errors" 
 	data-th-if="${#fields.hasErrors('*')}"
 	class="cards">
-	<h2>Attention : Veuillez vérifier vos champs !</h2>	
+	<h2>Attention : Veuillez vérifier vos champs !</h2>
+	<ul data-th-if="${#fields.hasErrors('global')}">
+		<li data-th-each="errorItem : ${#fields.errors('global')}" data-th-text="#{${errorItem}}"></li>
+	</ul>
 </div>

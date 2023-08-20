@@ -12,8 +12,8 @@ import jakarta.validation.constraints.Size;
 public class Formateur implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@NotBlank
-	@Size( max = 250, message = "Le nom doit avoir au moins 4 caractères", min = 2)
+	//@NotBlank
+	//@Size( max = 250, message = "Le nom doit avoir au moins 4 caractères", min = 2)
 	private String nom;
 	@NotBlank
 	@Size(min = 2, max = 250)

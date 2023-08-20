@@ -49,6 +49,10 @@ public class CoursDAOBouchon implements CoursDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
+	@Override
+	public boolean validateListOfCourseIds(List<Cours> lstCours) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
