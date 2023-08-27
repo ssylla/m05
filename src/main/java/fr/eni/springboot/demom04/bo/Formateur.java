@@ -22,6 +22,7 @@ public class Formateur implements Serializable {
 	@Email
 	@Pattern(regexp = "^[\\w-\\.]+@campus-eni.fr$")
 	private String email;
+	private Fichier photo;
 
 	private Cours coursPrincipal;
 	
@@ -63,8 +64,15 @@ public class Formateur implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	
+	public Fichier getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(Fichier photo) {
+		this.photo = photo;
+	}
+
 	public Cours getCoursPrincipal() {
 		return coursPrincipal;
 	}

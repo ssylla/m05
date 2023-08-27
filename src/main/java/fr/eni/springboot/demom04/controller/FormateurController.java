@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import fr.eni.springboot.demom04.bll.CoursService;
 import fr.eni.springboot.demom04.bll.FormateurService;
@@ -108,6 +109,7 @@ public class FormateurController {
 		System.out.println("Nom :" + formateur.getNom());
 		System.out.println("Prenom :" + formateur.getPrenom());
 		System.out.println("Email : " + formateur.getEmail());
+		System.out.println("Photo : " + formateur.getPhoto());
 		
 		if (bindingResult.hasErrors()) {
 			return "view-formateur-detail";

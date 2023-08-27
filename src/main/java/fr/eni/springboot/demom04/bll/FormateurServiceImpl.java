@@ -11,6 +11,7 @@ import fr.eni.springboot.demom04.bll.error.BusinessException;
 import fr.eni.springboot.demom04.bo.Cours;
 import fr.eni.springboot.demom04.bo.Formateur;
 import fr.eni.springboot.demom04.dal.CoursDAO;
+import fr.eni.springboot.demom04.dal.FichierDAO;
 import fr.eni.springboot.demom04.dal.FormateurDAO;
 
 @Service
@@ -19,6 +20,8 @@ public class FormateurServiceImpl implements FormateurService {
 	private FormateurDAO formateurDAO;
 	@Autowired
 	private CoursDAO coursDAO;
+	@Autowired
+	private FichierDAO fichierDAO;
 
 
 	@Override
@@ -35,6 +38,9 @@ public class FormateurServiceImpl implements FormateurService {
 		isValid &= validerListeCours(formateur.getCours(), be);
 		isValid &= validerUniqueEmail(formateur.getEmail(), be);
 		if (isValid) {
+			//Création du fichier 
+			fichierDAO.creer(formateur.getPhoto());
+			
 			formateurDAO.create(formateur);
 			// Attention, il faut aussi compléter l'appel de la méthode pour gérer
 			// l'insertion en base des cours
