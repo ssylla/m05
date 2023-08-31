@@ -15,9 +15,9 @@ import fr.eni.springboot.demom04.bo.Formateur;
 @Profile("prod")
 public class FormateurDAOImpl implements FormateurDAO {
 
-	private static final String INSERT_QUERY = "INSERT INTO `formateur` (email, nom, prenom) VALUES (:email,:nom,:prenom)";
-	private static final String FIND_BY_EMAIL_QUERY = "SELECT email, nom, prenom FROM `formateur` WHERE email = :email";
-	private static final String FIND_ALL_QUERY = "SELECT email, nom, prenom FROM `formateur`";
+	private static final String INSERT_QUERY = "INSERT INTO `formateur` (email, nom, prenom, id_photo) VALUES (:email,:nom,:prenom,:idPhoto)";
+	private static final String FIND_BY_EMAIL_QUERY = "SELECT fo.email, fo.nom, fo.prenom, fo.id_photo, fi.nom as photo FROM `formateur` fo LEFT JOIN `fichier` fi ON fo.id_photo = fi.id WHERE email = :email";
+	private static final String FIND_ALL_QUERY = "SELECT fo.email, fo.nom, fo.prenom, fo.id_photo, fi.nom as photo FROM `formateur` fo LEFT JOIN `fichier` fi ON fo.id_photo = fi.id";
 	private static final String UPDATE_QUERY = "UPDATE `formateur` SET nom = :nom, prenom = :prenom WHERE email = :email";
 	private final String COUNT_EMAIL_QUERY = "SELECT count(email) FROM `formateur` WHERE email = :email";
 
@@ -30,6 +30,7 @@ public class FormateurDAOImpl implements FormateurDAO {
 		mapParameters.addValue("nom", formateur.getNom());
 		mapParameters.addValue("email", formateur.getEmail());
 		mapParameters.addValue("prenom", formateur.getPrenom());
+		mapParameters.addValue("idPhoto", formateur.getPhoto().getId());
 
 		njt.update(INSERT_QUERY, mapParameters);
 	}
@@ -38,7 +39,7 @@ public class FormateurDAOImpl implements FormateurDAO {
 	public Formateur read(String emailFormateur) {
 		MapSqlParameterSource mapParameters = new MapSqlParameterSource();
 		mapParameters.addValue("email", emailFormateur);
-		return njt.queryForObject(FIND_BY_EMAIL_QUERY, mapParameters, new BeanPropertyRowMapper<>(Formateur.class));
+		return njt.queryForObject(FIND_BY_EMAIL_QUERY, mapParameters, new FormateurFichierRowMapper());
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class FormateurDAOImpl implements FormateurDAO {
 
 	@Override
 	public List<Formateur> findAll() {
-		return njt.query(FIND_ALL_QUERY, new BeanPropertyRowMapper<>(Formateur.class));
+		return njt.query(FIND_ALL_QUERY, new FormateurFichierRowMapper());
 	}
 
 	@Override

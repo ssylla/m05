@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import fr.eni.springboot.demom04.bll.error.BusinessError;
 import fr.eni.springboot.demom04.bll.error.BusinessException;
 import fr.eni.springboot.demom04.bo.Cours;
+import fr.eni.springboot.demom04.bo.Fichier;
 import fr.eni.springboot.demom04.bo.Formateur;
 import fr.eni.springboot.demom04.dal.CoursDAO;
 import fr.eni.springboot.demom04.dal.FichierDAO;
@@ -23,14 +24,13 @@ public class FormateurServiceImpl implements FormateurService {
 	@Autowired
 	private FichierDAO fichierDAO;
 
-
 	@Override
 	public void add(Formateur formateur) {
 		BusinessException be = new BusinessException();
-		
+
 		boolean isValid = true;
-		
-		//Validation de mes règles métier
+
+		// Validation de mes règles métier
 		isValid &= validerFormateur(formateur, be);
 		isValid &= validerNom(formateur.getNom(), be);
 		isValid &= validerPrenom(formateur.getPrenom(), be);
@@ -38,9 +38,9 @@ public class FormateurServiceImpl implements FormateurService {
 		isValid &= validerListeCours(formateur.getCours(), be);
 		isValid &= validerUniqueEmail(formateur.getEmail(), be);
 		if (isValid) {
-			//Création du fichier 
+			// Création du fichier
 			fichierDAO.creer(formateur.getPhoto());
-			
+
 			formateurDAO.create(formateur);
 			// Attention, il faut aussi compléter l'appel de la méthode pour gérer
 			// l'insertion en base des cours
@@ -52,7 +52,6 @@ public class FormateurServiceImpl implements FormateurService {
 			throw be;
 		}
 	}
-	
 
 	@Override
 	public List<Formateur> getFormateurs() {
@@ -70,16 +69,21 @@ public class FormateurServiceImpl implements FormateurService {
 
 	@Override
 	public void updateCoursFormateur(String emailFormateur, long idCours) {
-		//Mise à jour au niveau BO
+		// Mise à jour au niveau BO
 		Formateur f = formateurDAO.read(emailFormateur);
-		Cours c = coursDAO.read(idCours);	
+		Cours c = coursDAO.read(idCours);
 		f.getCours().add(c);
-		
-		//Mise à jour en base
+
+		// Mise à jour en base
 		coursDAO.insertCoursFormateur(idCours, emailFormateur);
 	}
 
-	
+	public Fichier getFormateurPhoto(long photoId) {
+
+		
+		return fichierDAO.lire(photoId);
+	}
+
 	private boolean validerFormateur(Formateur formateur, BusinessException be) {
 		boolean resultat = true;
 		if (null == formateur) {
@@ -88,21 +92,21 @@ public class FormateurServiceImpl implements FormateurService {
 		}
 		return resultat;
 	}
-	
+
 	private boolean validerNom(String nom, BusinessException be) {
 		boolean resultat = true;
 		if (null == nom || nom.isBlank()) {
 			be.add(BusinessError.VALIDATION_FORMATEUR_NOM_BLANK);
 			resultat = false;
 		}
-		
+
 		if (null != nom && (nom.length() < 2 || nom.length() > 250)) {
 			be.add(BusinessError.VALIDATION_FORMATEUR_NOM_LENGTH);
 			resultat = false;
 		}
 		return resultat;
 	}
-	
+
 	private boolean validerPrenom(String prenom, BusinessException be) {
 		if (prenom == null || prenom.isBlank()) {
 			be.add(BusinessError.VALIDATION_FORMATEUR_PRENOM_BLANK);
@@ -173,5 +177,5 @@ public class FormateurServiceImpl implements FormateurService {
 		}
 		return true;
 	}
-	
+
 }

@@ -2,6 +2,7 @@ package fr.eni.springboot.demom04.bll;
 
 import java.util.List;
 
+import fr.eni.springboot.demom04.bo.Fichier;
 import fr.eni.springboot.demom04.bo.Formateur;
 
 public interface FormateurService {
@@ -15,4 +16,6 @@ public interface FormateurService {
 	void update(Formateur formateur);
 	
 	void updateCoursFormateur(String emailFormateur, long idCours);
+	
+	public Fichier getFormateurPhoto(long photoId);
 }

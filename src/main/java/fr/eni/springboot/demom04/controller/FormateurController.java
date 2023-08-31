@@ -3,6 +3,8 @@ package fr.eni.springboot.demom04.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,7 @@ import fr.eni.springboot.demom04.bll.CoursService;
 import fr.eni.springboot.demom04.bll.FormateurService;
 import fr.eni.springboot.demom04.bll.error.BusinessException;
 import fr.eni.springboot.demom04.bo.Cours;
+import fr.eni.springboot.demom04.bo.Fichier;
 import fr.eni.springboot.demom04.bo.Formateur;
 import jakarta.validation.Valid;
 
@@ -88,6 +91,15 @@ public class FormateurController {
 		}
 	}
 	
+	@GetMapping( "/photo/{id}" )
+	public ResponseEntity<byte[]> photo( @PathVariable("id") Long photoId ) {
+		Fichier photo = formateurService.getFormateurPhoto( photoId );
+		
+		return ResponseEntity.ok()
+							 .header( HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + photo.getNom() + "\"" )
+							 .body( photo.getContenu() );
+	}
+	
 	
 	@GetMapping("/detail")
 	public String detailFormateurParParametre(
@@ -152,5 +164,8 @@ public class FormateurController {
 		 */
 		
 		return "redirect:/formateurs";
-	}	
+	}
+	
+	
+	
 }
